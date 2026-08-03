@@ -1,0 +1,8 @@
+<app-restaurant-card
+   *ngFor="let restaurant of restaurants "
+   [name]="restaurant.name"
+   [city]="restaurant.city"
+   [rate]="restaurant.rate"
+   (detailsClicked)="openRestaurant($event)">
+</app-restaurant-card>
+

@@ -1,0 +1,23 @@
+
+.card{
+    width:200px;
+    padding:15px;
+    border-radius:10px;
+    border:3px solid #3caf41;
+    text-align: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.detail{
+    width:150px;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #3c57af;
+    text-align: center;
+    align-items: center;
+    margin-left: 35px;
+
+}
