@@ -1,245 +1,39 @@
-import {
-  Component
-} from '@angular/core';
-
-import {
-  FormsModule
-} from '@angular/forms';
-
-import {
-  Router,
-  RouterLink
-} from '@angular/router';
-
-import {
-  UserService
-} from '../../services/user.service';
-
-import {
-  User
-} from '../../models/user.model';
-
-
-
-@Component({
-
-  selector:'app-register',
-
-  standalone:true,
-
-  imports:[
-    RouterLink,
-    FormsModule
-  ],
-
-  templateUrl:
-  './register.component.html',
-
-  styleUrl:
-  './register.component.css'
-
-})
-
-
+import { Component, ElementRef } from '@angular/core';
+import { FormsModule, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
+import { UserService } from '../../services/user.service';
+import { AuthShellComponent } from '../../shared/auth-shell.component';
+import { IconComponent } from '../../shared/icon.component';
+import { safeReturnUrl } from '../../shared/safe-return-url';
+@Component({selector:'app-register',standalone:true,imports:[RouterLink,FormsModule,AuthShellComponent,IconComponent],
+ templateUrl:'./register.component.html',styleUrls:['../../shared/auth-form.css','./register.component.css']})
 export class RegisterComponent {
-
-
-constructor(
-
-  private userService: UserService,
-
-  private router: Router
-
-){}
-
-
-
-name='';
-
-email='';
-
-password='';
-
-confirmPassword='';
-
-
-
-nameError='';
-
-emailError='';
-
-passwordError='';
-
-confirmPasswordError='';
-
-
-
-
-
-register(){
-
-
-this.nameError='';
-
-this.emailError='';
-
-this.passwordError='';
-
-this.confirmPasswordError='';
-
-
-
-
-if(this.name.trim()===''){
-
-this.nameError =
-'لطفاً نام خود را وارد کنید';
-
-}
-
-
-
-if(this.email.trim()===''){
-
-this.emailError =
-'لطفاً ایمیل خود را وارد کنید';
-
-}
-
-else if(!this.email.includes('@')){
-
-this.emailError =
-'فرمت ایمیل صحیح نیست';
-
-}
-
-
-
-
-
-if(this.password.trim()===''){
-
-this.passwordError =
-'لطفاً رمز عبور را وارد کنید';
-
-}
-
-else if(this.password.length < 6){
-
-this.passwordError =
-'رمز عبور باید حداقل ۶ کاراکتر باشد';
-
-}
-
-
-
-
-
-if(this.confirmPassword.trim()===''){
-
-this.confirmPasswordError =
-'لطفاً رمز عبور را تکرار کنید';
-
-}
-
-else if(
-this.password !== this.confirmPassword
-){
-
-this.confirmPasswordError =
-'رمزهای عبور یکسان نیستند';
-
-}
-
-
-
-
-
-if(
-this.nameError ||
-this.emailError ||
-this.passwordError ||
-this.confirmPasswordError
-){
-
-return;
-
-}
-
-
-
-
-
-const newUser:User = {
-
-
-id:Date.now(),
-
-
-name:this.name,
-
-
-email:this.email,
-
-
-password:this.password,
-
-
-phone:'',
-
-
-role:'customer'
-
-
-};
-
-
-
-
-
-this.userService
-.register(newUser)
-.subscribe({
-
-next:()=>{
-
-
-alert(
-'ثبت نام با موفقیت انجام شد'
-);
-
-
-this.router.navigate([
-
-'/login'
-
-]);
-
-
-},
-
-
-error:(error)=>{
-
-
-console.error(
-error
-);
-
-
-alert(
-'ثبت نام ناموفق بود'
-);
-
-
-}
-
-
-});
-
-
-
-}
-
-
+  name='';email='';password='';confirmPassword='';
+  nameError='';emailError='';passwordError='';confirmPasswordError='';errorMessage='';
+  submitting=false;showPassword=false;showConfirmPassword=false;
+  get returnUrl():string|null{return safeReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));}
+  get authQuery():{returnUrl?:string}{return this.returnUrl?{returnUrl:this.returnUrl}:{};}
+  constructor(private userService:UserService,private router:Router,private route:ActivatedRoute,private host:ElementRef<HTMLElement>){}
+  register():void{
+    if(this.submitting)return;
+    this.errorMessage='';
+    this.nameError=this.name.trim()?'':'نام و نام خانوادگی را وارد کن.';
+    const email=this.email.trim().toLowerCase();
+    this.emailError=!email||Validators.email(new FormControl(email))?'ایمیل معتبر وارد کن.':'';
+    this.passwordError=this.password.trim().length<6?'رمز عبور باید حداقل ۶ کاراکتر باشد.':'';
+    this.confirmPasswordError=this.password!==this.confirmPassword?'دو رمز عبور یکسان نیستند.':'';
+    const invalid=this.nameError?'name':this.emailError?'email':this.passwordError?'password':this.confirmPasswordError?'confirmPassword':null;
+    if(invalid){this.focus('register-'+invalid);return;}
+    this.submitting=true;
+    this.userService.register({name:this.name.trim(),email,password:this.password,phone:'',role:'customer'})
+      .pipe(finalize(()=>this.submitting=false)).subscribe({
+        next:()=>{void this.router.navigate(['/login'],{queryParams:{registered:'1',...this.authQuery}});},
+        error:error=>{
+          if(error?.message==='EMAIL_EXISTS'){this.emailError='این ایمیل قبلاً ثبت شده است؛ وارد حسابت شو.';this.focus('register-email');}
+          else{this.errorMessage='ثبت‌نام انجام نشد. ارتباط را بررسی و دوباره تلاش کن.';this.focus('register-error');}
+        }
+      });
+  }
+  private focus(id:string):void{setTimeout(()=>this.host.nativeElement.querySelector<HTMLElement>('#'+id)?.focus());}
 }

@@ -1,0 +1,19 @@
+<article class="food-card" tabindex="-1" [class.unavailable]="!food.isAvailable">
+  <div class="food-main">
+    <div class="food-copy"><span class="category">{{categoryName}}</span><h3>{{food.name}}</h3><p>{{food.description}}</p>
+      @if(!food.isAvailable){<span class="availability">فعلاً ناموجود</span>}
+    </div>
+    <img [appImage]="food.imageUrl" [alt]="food.name" loading="lazy" width="124" height="124">
+  </div>
+  <div class="food-action">
+    <strong class="price">{{food.price.toLocaleString('fa-IR')}}<small>تومان</small></strong>
+
+    <div class="quantity quantity-control" [class.has-quantity]="quantity > 0" role="group" [attr.aria-label]="'تعداد ' + food.name">
+      <button #increaseButton type="button" [class.add-button]="quantity === 0" (click)="quantity > 0 ? increase.emit() : add.emit()" [disabled]="!food.isAvailable || !restaurantOpen" [attr.aria-label]="(quantity > 0 ? 'افزایش تعداد ' : 'افزودن ') + food.name">
+        @if(food.isAvailable && restaurantOpen || quantity > 0){<app-icon name="plus"/>}
+        @if(quantity === 0){ {{!restaurantOpen ? 'بسته است' : !food.isAvailable ? 'ناموجود' : 'افزودن'}} }
+      </button>
+      @if(quantity > 0){<span>{{quantity.toLocaleString('fa-IR')}}</span><button type="button" (click)="decreaseQuantity(increaseButton)" [attr.aria-label]="'کاهش تعداد ' + food.name"><app-icon name="minus"/></button>}
+    </div>
+  </div>
+</article>

@@ -1,156 +1,39 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-  CommonModule
-} from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { Order } from '../../models/order.model';
+import { OrderService } from '../../services/order.service';
+import { AuthService } from '../../services/auth.service';
+import { OrderStatus } from '../../models/order.model';
+import { FormsModule } from '@angular/forms';
+import { WorkspaceHeaderComponent } from '../../shared/workspace-header.component';
+import { OrderRecordComponent } from '../../shared/order-record.component';
+import { IconComponent } from '../../shared/icon.component';
+import { ORDER_STATUSES, orderStatusText, persianNumber } from '../../shared/order-presentation';
 
-
-import {
-  Order
-} from '../../models/order.model';
-
-
-import {
-  OrderService
-} from '../../services/order.service';
-
-
-import {
-  AuthService
-} from '../../services/auth.service';
-
-
-
-@Component({
-
-  selector:'app-orders',
-
-  standalone:true,
-
-  imports:[
-    CommonModule,RouterLink
-  ],
-
-  templateUrl:
-  './orders.component.html',
-
-  styleUrl:
-  './orders.component.css'
-
-})
-
-
-export class OrdersComponent
-implements OnInit {
-
-
-  orders:Order[] = [];
-
-
-
-
-  constructor(
-
-    private orderService:
-      OrderService,
-
-
-    private authService:
-      AuthService
-
-
-  ){}
-
-
-
-
-
-  ngOnInit():void {
-
-
-
-    const user =
-
-      this.authService
-      .getCurrentUser();
-
-
-
-
-    if(user){
-
-
-
-      this.orders =
-
-        this.orderService
-        .getOrdersByUserId(
-          user.id
-        );
-
-
-    }
-
-
-
+@Component({ selector: 'app-orders', standalone: true, imports: [CommonModule, RouterLink, FormsModule, WorkspaceHeaderComponent, OrderRecordComponent, IconComponent],
+  templateUrl: './orders.component.html', styleUrl: './orders.component.css' })
+export class OrdersComponent implements OnInit {
+  orders: Order[] = [];
+  loading = false;
+  errorMessage = '';
+  statusFilter: OrderStatus | '' = '';
+  readonly statuses = ORDER_STATUSES;
+  readonly number = persianNumber;
+  get filteredOrders(): Order[] { return this.orders.filter(order => !this.statusFilter || order.status === this.statusFilter); }
+  constructor(private orderService: OrderService, private authService: AuthService) {}
+  ngOnInit(): void { this.loadOrders(); }
+  loadOrders(): void {
+    const user = this.authService.getCurrentUser();
+    if (!user) return;
+    this.loading = true;
+    this.errorMessage = '';
+    this.orderService.getOrdersByUserId(user.id).subscribe({
+      next: orders => { this.orders = orders; this.loading = false; },
+      error: () => { this.errorMessage = 'دریافت سفارش‌ها انجام نشد.'; this.loading = false; }
+    });
   }
-
-
-
-
-
-
-  getStatusText(
-    status:string
-  ){
-
-
-
-    switch(status){
-
-
-      case 'pending':
-
-        return 'در انتظار تایید';
-
-
-
-      case 'accepted':
-
-        return 'تایید شده';
-
-
-
-      case 'preparing':
-
-        return 'در حال آماده‌سازی';
-
-
-
-      case 'delivered':
-
-        return 'تحویل داده شده';
-
-
-
-      case 'cancelled':
-
-        return 'لغو شده';
-
-
-
-      default:
-
-        return 'نامشخص';
-
-
-    }
-
-
+  getStatusText(status: string): string {
+    return orderStatusText(status);
   }
-
 }

@@ -1,0 +1,15 @@
+:host{display:block;min-width:0;}
+.food-card{height:100%;padding:20px;background:#fff;border:1px solid var(--border);border-radius:18px;display:flex;flex-direction:column;transition:border-color .18s,box-shadow .18s;}
+.food-card:hover{border-color:#d9a0ba;box-shadow:var(--shadow-sm);}
+.food-main{display:flex;gap:18px;align-items:flex-start;flex:1;}
+.food-copy{flex:1;min-width:0;}
+.category{font-size:12px;color:var(--primary-dark);font-weight:600;}
+h3{font-size:19px;line-height:1.7;color:var(--surface-dark);margin:4px 0 7px;}
+p{font-size:14px;line-height:1.9;color:var(--text-light);margin:0;overflow-wrap:anywhere;}
+.food-main img{width:112px;height:112px;object-fit:cover;border-radius:13px;background:var(--primary-light);flex:none;}
+.food-action{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;margin-top:18px;border-top:1px solid #f1e9ee;}
+.price{font-size:18px;white-space:nowrap;color:var(--surface-dark);}
+.price small{font-size:12px;font-weight:500;margin-inline-start:5px;color:var(--text-light);}
+.availability{display:inline-block;font-size:12px;margin-top:9px;color:#8b3447;}
+@media(max-width:600px){.food-card{padding:16px;}.food-main{gap:12px;}.food-main img{width:88px;height:88px;border-radius:11px;}h3{font-size:18px;}.food-action{margin-top:14px;padding-top:14px;gap:8px;}.price{font-size:17px;}}
+@media(max-width:350px){.food-main img{width:76px;height:76px;}.food-card{padding:13px;}.food-action{flex-wrap:wrap;}.price{font-size:16px;}.quantity{margin-inline-start:auto;}}

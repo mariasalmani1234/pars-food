@@ -5,6 +5,7 @@ import {
 import {
   RouterLink
 } from '@angular/router';
+import { AuthNavigationService } from '../../shared/auth-navigation.service';
 
 
 @Component({
@@ -27,6 +28,6 @@ import {
 
 
 export class FooterComponent {
-
+  constructor(public authNavigation: AuthNavigationService) {}
 
 }

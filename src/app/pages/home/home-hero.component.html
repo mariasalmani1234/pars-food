@@ -1,0 +1,18 @@
+<section class="hero page-container" aria-labelledby="home-heading">
+    <div class="hero-copy">
+      <p class="eyebrow"><span></span>یک انتخاب خوشمزه، از همین‌جا</p>
+      <h1 id="home-heading">برای هر حال‌وهوا،<br><span>یک طعمِ خوب.</span></h1>
+      <p class="hero-description">منوی رستوران‌های شهر را ببین، غذای دلخواهت را پیدا کن و ساده سفارش بده.</p>
+      <form class="hero-search search-control" (ngSubmit)="search()" role="search">
+        <label class="sr-only" for="home-search">جستجوی رستوران</label>
+        <app-icon name="search"/>
+        <input id="home-search" type="search" name="restaurant" [(ngModel)]="searchText" placeholder="اسم رستوران مورد علاقه‌ات..." autocomplete="off">
+        <button class="action-button" type="submit">پیدا کن <app-icon name="arrow"/></button>
+      </form>
+      <div class="hero-caption"><app-icon name="pin"/> رستوران‌های تهران <span aria-hidden="true">·</span><a routerLink="/restaurants">مشاهده همه رستوران‌ها</a></div>
+    </div>
+    <div class="food-scene">
+      <div class="photo-frame"><img [appImage]="'assets/image/margarita.jfif'" alt="پیتزای تازه با پنیر روی میز" width="520" height="520" fetchpriority="high"></div>
+      <div class="scene-caption"><span class="caption-icon accent-icon"><app-icon name="utensils"/></span><span><strong>امروز چی میل داری؟</strong><small>از بین طعم‌های دلخواهت انتخاب کن.</small></span></div>
+    </div>
+  </section>

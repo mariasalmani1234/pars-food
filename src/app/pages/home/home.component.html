@@ -1,289 +1,33 @@
-<section class="home-page">
+<div class="home-page">
+  <app-home-hero/>
 
+  <app-category-section></app-category-section>
 
-<section class="hero-bento">
+  <section class="restaurants-section page-container" aria-labelledby="restaurants-heading">
+    <div class="section-head">
+      <div><p class="eyebrow">وقتِ انتخابه</p><h2 id="restaurants-heading">رستوران‌های پارس‌فود</h2></div>
+      <a class="section-link text-link" routerLink="/restaurants">همه رستوران‌ها <app-icon name="arrow"/></a>
+    </div>
+    @if(!loading && !errorMessage && restaurants.length){<p class="section-note">{{restaurants.length.toLocaleString('fa-IR')}} رستوران برای انتخاب @if(openCount){<span>· {{openCount.toLocaleString('fa-IR')}} رستوران اکنون باز است</span>}</p>}
+    @if(loading){
+      <div class="restaurant-grid" role="status" aria-label="در حال دریافت رستوران‌ها">
+        @for(item of [1,2,3,4];track item){<div class="skeleton-card" aria-hidden="true"><div></div><span></span><span></span></div>}
+      </div>
+    } @else if(errorMessage){
+      <div class="state-panel empty-state" role="alert"><app-icon name="grid"/><h3>رستوران‌ها فعلاً در دسترس نیستند</h3><p>{{errorMessage}} دوباره تلاش کن.</p><button class="primary-button" (click)="loadRestaurants()">تلاش دوباره</button></div>
+    } @else if(!restaurants.length){
+      <div class="state-panel empty-state"><app-icon name="utensils"/><h3>هنوز رستورانی اضافه نشده</h3><p>به‌زودی می‌توانی منوی رستوران‌ها را از اینجا ببینی.</p></div>
+    } @else {
+      <div class="restaurant-grid">@for(restaurant of restaurants;track restaurant.id){<app-restaurant-card [restaurant]="restaurant"/>}</div>
+    }
+  </section>
 
-
-<div class="hero-main">
-
-
-<span class="badge">
-
-✨ پارس فود
-
-</span>
-
-
-<h1>
-
-غذای مورد علاقه‌ات
-
-<br>
-
-سریع‌تر از همیشه
-
-</h1>
-
-
-
-<p>
-
-بهترین رستوران‌ها و غذاهای شهر را پیدا کن
-و تنها با چند کلیک سفارش بده.
-
-</p>
-
-
-
-<a
-routerLink="/restaurants"
-class="primary-btn"
->
-
-مشاهده رستوران‌ها
-
-</a>
-
-
-
+  <section class="how-section page-container" aria-labelledby="how-heading">
+    <div class="how-intro"><p class="eyebrow">ساده، از اول تا آخر</p><h2 id="how-heading">از انتخاب<br>تا اولین لقمه.</h2></div>
+    <ol class="how-steps">
+      <li><span>۰۱</span><div><h3>رستورانت را پیدا کن</h3><p>بر اساس اسم یا دسته‌بندی، منوی دلخواهت را ببین.</p></div></li>
+      <li><span>۰۲</span><div><h3>سبدت را بچین</h3><p>غذاها را انتخاب کن و تعداد و مبلغ را بررسی کن.</p></div></li>
+      <li><span>۰۳</span><div><h3>سفارشت را ثبت کن</h3><p>آدرس را وارد کن و وضعیت سفارش را در حسابت ببین.</p></div></li>
+    </ol>
+  </section>
 </div>
-
-
-
-
-
-
-<div class="hero-food">
-
-
-<img
-
-src="assets/images/hero-food.png"
-
-alt="food"
-
->
-
-
-
-<div class="rating-card">
-
-
-<strong>
-⭐ 4.8
-</strong>
-
-
-<span>
-رضایت کاربران
-</span>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-<div class="mini-card">
-
-🍔
-
-<div>
-
-<strong>
-غذاهای محبوب
-</strong>
-
-<small>
-بیش از 50 مدل غذا
-</small>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="mini-card">
-
-🚀
-
-<div>
-
-<strong>
-ارسال سریع
-</strong>
-
-<small>
-کمتر از 40 دقیقه
-</small>
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="mini-card">
-
-🏪
-
-<div>
-
-<strong>
-رستوران معتبر
-</strong>
-
-<small>
-انتخاب کاربران
-</small>
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<app-category-section></app-category-section>
-
-
-
-
-
-
-
-
-<section class="restaurants-section page-container">
-
-
-<div class="section-head">
-
-
-<span>
-محبوب‌ترین‌ها
-</span>
-
-
-<h2>
-رستوران‌های منتخب
-</h2>
-
-
-</div>
-
-
-
-
-
-
-<div class="restaurant-bento">
-
-
-@for(
-restaurant of restaurants;
-track restaurant.id
-){
-
-
-<app-restaurant-card
-
-[restaurant]="restaurant"
-
->
-
-
-</app-restaurant-card>
-
-
-
-}
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<section class="feature-section">
-
-
-<div class="feature-card">
-
-
-<h2>
-چرا پارس فود؟
-</h2>
-
-
-<p>
-تجربه سفارش غذا با طراحی ساده،
-سریع و حرفه‌ای.
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="feature-item">
-
-⚡
-
-ارسال سریع
-
-</div>
-
-
-
-<div class="feature-item">
-
-🍽️
-
-تنوع غذا
-
-</div>
-
-
-
-<div class="feature-item">
-
-⭐
-
-کیفیت تضمینی
-
-</div>
-
-
-
-
-</section>
-
-
-
-</section>

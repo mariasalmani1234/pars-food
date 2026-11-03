@@ -1,201 +1,23 @@
 <header class="navbar">
-
-
-<div class="navbar-container">
-
-
-
-<a
-
-routerLink="/"
-
-class="logo"
-
->
-
-<span>
-P
-</span>
-
-پارس فود
-
-</a>
-
-
-
-
-
-
-<nav>
-
-
-<a
-
-routerLink="/"
-
-routerLinkActive="active"
-
-[routerLinkActiveOptions]="{
-exact:true
-}"
-
->
-
-خانه
-
-</a>
-
-
-
-<a
-
-routerLink="/restaurants"
-
-routerLinkActive="active"
-
->
-
-رستوران‌ها
-
-</a>
-
-
-
-
-@if(authService.getCurrentUser()){
-
-
-<a
-
-routerLink="/orders"
-
-routerLinkActive="active"
-
->
-
-سفارش‌ها
-
-</a>
-
-
-}
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-<div class="user-area">
-
-
-
-@if(authService.getCurrentUser()){
-
-
-<div class="user-name">
-
-
-👤
-
-{{
-
-authService
-.getCurrentUser()
-?.name
-
-}}
-
-
-</div>
-
-
-
-<button
-
-class="logout"
-
-(click)="logout()"
-
->
-
-خروج
-
-</button>
-
-
-}
-
-@else{
-
-
-<a
-
-routerLink="/login"
-
->
-
-ورود
-
-</a>
-
-
-<a
-
-routerLink="/register"
-
->
-
-ثبت‌نام
-
-</a>
-
-
-}
-
-
-
-
-<a
-
-routerLink="/cart"
-
-class="cart-button"
-
->
-
-🛒
-
-
-<span>
-
-{{
-
-cartService
-.getTotalQuantity()
-
-}}
-
-</span>
-
-
-</a>
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
+  <div class="navbar-container page-container">
+    <a routerLink="/" class="logo" aria-label="پارس‌فود، صفحه اصلی"><span class="brand-mark" aria-hidden="true">P<span></span></span>پارس‌فود</a>
+    <nav aria-label="ناوبری اصلی">
+      <a class="control-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" ariaCurrentWhenActive="page">خانه</a>
+      <a class="control-link" routerLink="/restaurants" routerLinkActive="active" ariaCurrentWhenActive="page">رستوران‌ها</a>
+      @if(authService.getCurrentUser(); as user){
+        <a class="control-link" routerLink="/orders" routerLinkActive="active" ariaCurrentWhenActive="page">سفارش‌های من</a>
+        @if(user.role==='admin'){<a class="control-link" routerLink="/admin" routerLinkActive="active" ariaCurrentWhenActive="page">مدیریت</a>}
+        @else if(user.role==='restaurant'){<a class="control-link" routerLink="/restaurant-management" routerLinkActive="active" ariaCurrentWhenActive="page">پنل رستوران</a>}
+      }
+    </nav>
+    <div class="user-area">
+      @if(authService.getCurrentUser(); as user){
+        <a routerLink="/profile" class="profile-link control-link" [attr.aria-label]="'پروفایل ' + user.name"><app-icon name="user"/><span>{{user.name}}</span></a>
+        <button class="logout control-link" (click)="logout()">خروج</button>
+      } @else {
+        <a class="login-link control-link" routerLink="/login" [queryParams]="authNavigation.queryFor('login')">ورود</a><a class="register-link control-link" routerLink="/register" [queryParams]="authNavigation.queryFor('register')">ثبت‌نام</a>
+      }
+      <a routerLink="/cart" class="cart-button control-link" [attr.aria-label]="'سبد خرید، ' + cartService.getTotalQuantity() + ' غذا'"><app-icon name="cart"/><span class="cart-count" aria-live="polite">{{cartService.getTotalQuantity().toLocaleString('fa-IR')}}</span></a>
+    </div>
+  </div>
 </header>
