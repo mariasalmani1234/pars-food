@@ -1,0 +1,23 @@
+<section class="discovery-tools" aria-label="جستجو و فیلتر رستوران‌ها">
+    <div class="search-row">
+      <form class="search-field search-control" (ngSubmit)="searchSubmit.emit()" role="search">
+        <app-icon name="search"/>
+        <label class="sr-only" for="restaurant-search">جستجوی نام رستوران</label>
+        <input id="restaurant-search" name="q" type="search" [(ngModel)]="searchText"
+          (ngModelChange)="searchTextChange.emit($event)" placeholder="اسم رستوران مورد علاقه‌ات..." autocomplete="off">
+        @if(searchText){<button type="button" class="clear-search" (click)="searchClear.emit()" aria-label="پاک کردن جستجو"><app-icon name="close"/></button>}
+        <button class="search-button action-button" type="submit">جستجو</button>
+      </form>
+      <label class="open-filter"><input type="checkbox" [(ngModel)]="onlyOpen" (ngModelChange)="onlyOpenChange.emit($event)"><span>فقط رستوران‌های باز</span></label>
+    </div>
+    @if(categories.length){
+      <div class="category-chips choice-chips" role="group" aria-label="دسته‌بندی غذاها">
+        <button type="button" [class.active]="categoryId === null" [attr.aria-pressed]="categoryId === null" (click)="categoryIdChange.emit(null)"><app-icon name="grid"/>همه</button>
+        @for(category of categories; track category.id){
+          <button type="button" [class.active]="categoryId === category.id" [attr.aria-pressed]="categoryId === category.id" (click)="categoryIdChange.emit(category.id)">
+            <app-icon [name]="categoryIcon(category.id)"/>{{category.name}}<span class="chip-count">{{(categoryCounts[category.id] || 0).toLocaleString('fa-IR')}}</span>
+          </button>
+        }
+      </div>
+    }
+  </section>

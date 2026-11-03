@@ -1,0 +1,20 @@
+:host{display:block;}
+.hero{display:grid;grid-template-columns:1.12fr 1fr;align-items:center;gap:52px;padding-block:48px 40px;}
+.hero .eyebrow{display:flex;align-items:center;gap:9px;}
+.eyebrow>span{width:7px;height:7px;background:var(--primary-dark);border-radius:50%;}
+h1{margin:0;color:var(--surface-dark);font-size:clamp(32px,4vw,56px);line-height:1.55;font-weight:850;letter-spacing:-1.6px;}
+h1>span{color:var(--primary-dark);}
+.hero-description{max-width:470px;color:var(--text-light);font-size:16px;line-height:2;margin:16px 0 24px;}
+.hero-search{padding:7px 8px 7px 15px;}
+.hero-search button{padding:9px 18px;font-size:14px;white-space:nowrap;}
+.hero-caption{display:flex;align-items:center;gap:6px;color:var(--text-light);font-size:11px;margin-top:10px;}
+.hero-caption a{min-height:44px;display:inline-flex;align-items:center;text-underline-offset:5px;}
+.food-scene{position:relative;min-width:0;padding:18px 12px 25px 20px;}
+.photo-frame{aspect-ratio:1;border-radius:50% 50% 44% 46%;overflow:hidden;border:10px solid #ffe4f0;transform:rotate(-5deg);box-shadow:20px 15px 0 #fce8f0;}
+.photo-frame img{width:100%;height:100%;object-fit:cover;transform:rotate(5deg) scale(1.1);}
+.scene-caption{position:absolute;bottom:16px;right:-5px;display:flex;align-items:center;gap:12px;background:#fff;padding:14px 18px;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-md);}
+.scene-caption strong,.scene-caption small{display:block;}
+@media(max-width:1000px){.hero{gap:26px;}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding-block:28px 18px;gap:16px;}.hero-description{font-size:14px;margin:10px 0 16px;}.hero-search{padding:5px;gap:7px;}.hero-search button{padding-inline:12px;}.food-scene{height:185px;padding:0;}.photo-frame{width:180px;position:absolute;left:19px;top:0;border-width:6px;box-shadow:10px 7px 0 #fce8f0;}.caption-icon{width:32px;height:32px;border-radius:9px;}}
+
+.hero-search input{flex:1;width:0;}.scene-caption{font-size:12px;}.scene-caption small{font-size:11px;color:var(--text-light);margin-top:3px;}

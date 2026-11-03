@@ -1,0 +1,10 @@
+<section class="basket" [class.has-items]="items.length" aria-label="خلاصه کل سبد خرید">
+  <div class="basket-heading"><span class="basket-icon accent-icon"><app-icon name="cart"/></span><div><h2>سبد خرید شما</h2><p>{{quantity.toLocaleString('fa-IR')}} غذا @if(restaurantCount > 1){<span>از {{restaurantCount.toLocaleString('fa-IR')}} رستوران</span>}</p></div></div>
+  @if(items.length){
+    <ul class="basket-items">@for(item of items; track item.food.id){<li><span>{{item.quantity.toLocaleString('fa-IR')}} × {{item.food.name}}</span><strong>{{(item.quantity*item.food.price).toLocaleString('fa-IR')}}</strong></li>}</ul>
+    <div class="total"><span>جمع کل سبد</span><strong>{{total.toLocaleString('fa-IR')}}<small>تومان</small></strong></div>
+    <a routerLink="/cart" class="basket-link action-button">مشاهده سبد خرید <app-icon name="arrow"/></a>
+  } @else {
+    <div class="empty-basket"><app-icon name="utensils"/><p>سفره‌ات را بچین.</p><span>غذای دلخواهت را از منو اضافه کن.</span></div>
+  }
+</section>

@@ -1,92 +1,12 @@
-<section class="categories page-container">
-
-  <div class="section-title">
-
-    <span>
-      دسته‌بندی غذاها
-    </span>
-
-    <h2>
-      چی میل داری؟
-    </h2>
-
-  </div>
-
-
+<section class="categories page-container" aria-label="دسته‌بندی غذاها">
+  <div class="category-title"><h2>چی میل داری؟</h2><span>از طعم دلخواهت شروع کن</span></div>
   <div class="category-grid">
-
-
-    <a class="category-card">
-
-      <div>
-        🍔
-      </div>
-
-      <strong>
-        برگر
-      </strong>
-
-      <small>
-        انواع برگرهای ویژه
-      </small>
-
-    </a>
-
-
-
-    <a class="category-card">
-
-      <div>
-        🍕
-      </div>
-
-      <strong>
-        پیتزا
-      </strong>
-
-      <small>
-        پیتزاهای تازه
-      </small>
-
-    </a>
-
-
-
-    <a class="category-card">
-
-      <div>
-        🍗
-      </div>
-
-      <strong>
-        سوخاری
-      </strong>
-
-      <small>
-        مرغ سوخاری
-      </small>
-
-    </a>
-
-
-
-    <a class="category-card">
-
-      <div>
-        🥤
-      </div>
-
-      <strong>
-        نوشیدنی
-      </strong>
-
-      <small>
-        نوشیدنی خنک
-      </small>
-
-    </a>
-
-
+    @for(category of categories;track category.id){
+      <a class="category-card" routerLink="/restaurants" [queryParams]="{category:category.id}">
+        <span class="category-icon"><app-icon [name]="category.icon"/></span>
+        <span><strong>{{category.name}}</strong><small>{{category.description}}</small></span>
+        <span class="category-arrow"><app-icon name="arrow"/></span>
+      </a>
+    }
   </div>
-
 </section>

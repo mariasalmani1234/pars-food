@@ -1,0 +1,9 @@
+import { Component, Input } from '@angular/core';
+import { persianNumber } from './order-presentation';
+
+export interface WorkspaceMetric { label: string; value: number | null; suffix?: string; hint?: string; accent?: boolean; }
+@Component({ selector: 'app-workspace-metrics', standalone: true,
+  template: `<div class="metrics">@for(item of items; track item.label){<div [class.accent]="item.accent"><span>{{item.label}}</span><strong>{{item.value === null ? '—' : number(item.value)}} @if(item.suffix && item.value !== null){<small>{{item.suffix}}</small>}</strong>@if(item.hint){<small class="hint">{{item.hint}}</small>}</div>}</div>`,
+  styles: [`.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.6fr);gap:16px;}.metrics>div{padding:20px;border:1px solid var(--border);border-radius:16px;background:white;}.metrics span{color:var(--text-light);font-size:12px;}.metrics strong{display:block;font-size:28px;margin-top:8px;}.metrics .accent{background:var(--surface-dark);color:white;border-color:var(--surface-dark);}.accent span,.accent .hint{color:#ebdfe7;}.accent strong{font-size:24px;}small{font-size:12px;font-weight:400;}.hint{display:block;color:var(--text-light);}@media(max-width:900px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr));}.metrics>div:last-child{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;}.metrics>div:last-child strong{margin:0;}}@media(max-width:600px){.metrics{gap:8px;}.metrics>div{padding:14px 12px;}.metrics strong{font-size:25px;}.accent strong{font-size:20px;}.metrics>div:last-child{padding:16px 12px;}}@media(max-width:360px){.metrics span{font-size:11px;}.metrics>div:last-child{flex-wrap:wrap;}.metrics>div:last-child strong{font-size:21px;}}`]
+})
+export class WorkspaceMetricsComponent { @Input() items: WorkspaceMetric[] = []; readonly number = persianNumber; }

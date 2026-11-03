@@ -1,274 +1,33 @@
-<section
-class="detail-page"
-*ngIf="restaurant; else notFound"
->
-
-
-<div class="restaurant-cover">
-
-
-<div>
-
-<span>
-رستوران منتخب
-</span>
-
-
-<h1>
-{{restaurant.name}}
-</h1>
-
-
-<p>
-{{restaurant.description}}
-</p>
-
-
-<div class="meta">
-
-
-<strong>
-⭐ {{restaurant.rate}}
-</strong>
-
-
-<strong>
-📍 {{restaurant.city}}
-</strong>
-
-
-<strong>
-🚀 30 دقیقه
-</strong>
-
-
-</div>
-
-
-</div>
-
-
-
-<img
-
-[src]="restaurant.image"
-
-[alt]="restaurant.name"
-
->
-
-
-</div>
-
-
-
-
-
-
-
-<section class="menu">
-
-
-<div class="menu-head">
-
-
-<h2>
-منوی غذا
-</h2>
-
-
-<a routerLink="/cart">
-سبد خرید
-</a>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="category-filter">
-
-
-<button
-
-[class.active]="selectedCategoryId===null"
-
-(click)="filterByCategory(null)"
-
->
-
-همه
-
-</button>
-
-
-
-<button
-
-*ngFor="let category of categories"
-
-[class.active]="selectedCategoryId===category.id"
-
-(click)="filterByCategory(category.id)"
-
->
-
-{{category.name}}
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="food-grid">
-
-
-
-<article
-
-class="food-card"
-
-*ngFor="let food of filteredFoods"
-
->
-
-
-<div class="food-image">
-
-
-<img
-
-[src]="food.imageUrl"
-
-[alt]="food.name"
-
->
-
-
-</div>
-
-
-
-
-
-<div class="food-content">
-
-
-<span>
-
-دسته {{food.categoryId}}
-
-</span>
-
-
-
-<h3>
-
-{{food.name}}
-
-</h3>
-
-
-
-<p>
-
-{{food.description}}
-
-</p>
-
-
-
-
-<div class="food-bottom">
-
-
-<strong>
-
-{{food.price | number}}
-
-تومان
-
-</strong>
-
-
-
-
-<button
-
-(click)="addToCart(food)"
-
-[disabled]="!food.isAvailable"
-
->
-
-
-{{
-
-addedFoodId === food.id
-
-?
-
-'اضافه شد ✓'
-
-:
-
-'افزودن'
-
-}}
-
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</article>
-
-
-
-
-</div>
-
-
-
-
-
+<section class="detail-page page-container">
+  @if(loading){
+    <div class="menu-state empty-state" role="status"><app-icon name="utensils"/><h1>در حال آماده کردن منو...</h1><p>اطلاعات رستوران را دریافت می‌کنیم.</p></div>
+  } @else if(errorMessage){
+    <div class="menu-state empty-state" role="alert"><app-icon name="utensils"/><h1>ارتباط برقرار نشد</h1><p>{{errorMessage}}</p><button class="primary-button" (click)="retry()">تلاش دوباره</button><a routerLink="/restaurants">همه رستوران‌ها</a></div>
+  } @else if(restaurant){
+    <app-restaurant-intro [restaurant]="restaurant"/>
+    @if(!restaurant.isOpen){<p class="closed-notice" role="status">این رستوران فعلاً سفارش نمی‌پذیرد. می‌توانی منو را ببینی یا اقلام قبلی را از سبد کم کنی.</p>}
+    <div class="menu-layout">
+      <section class="menu-content" aria-labelledby="menu-heading">
+        <div class="menu-heading"><div><p class="eyebrow">یک انتخاب خوشمزه</p><h2 id="menu-heading">منوی {{restaurant.name}}</h2></div><span class="menu-count">{{foods.length.toLocaleString('fa-IR')}} غذا</span></div>
+        @if(foods.length){
+          <div class="menu-tools">
+            <div class="menu-search search-control"><app-icon name="search"/><label class="sr-only" for="food-search">جستجو در منوی غذا</label><input id="food-search" type="search" [(ngModel)]="searchText" placeholder="چی میل داری؟ اسم غذا را بنویس..." autocomplete="off">@if(searchText){<button class="clear-search" (click)="searchText = ''" aria-label="پاک کردن جستجوی غذا"><app-icon name="close"/></button>}</div>
+            <div class="category-filter choice-chips" role="group" aria-label="دسته‌بندی منو">
+              <button (click)="filterByCategory(null)" [class.active]="selectedCategoryId === null" [attr.aria-pressed]="selectedCategoryId === null">همه غذاها</button>
+              @for(category of categories; track category.id){<button (click)="filterByCategory(category.id)" [class.active]="selectedCategoryId === category.id" [attr.aria-pressed]="selectedCategoryId === category.id">{{category.name}}</button>}
+            </div>
+          </div>
+          @if(searchText || selectedCategoryId !== null){<p class="filter-summary" role="status">{{filteredFoods.length.toLocaleString('fa-IR')}} غذا پیدا شد <button (click)="clearFilters()">پاک کردن فیلترها</button></p>}
+          @if(filteredFoods.length){<div class="food-grid">@for(food of filteredFoods; track food.id){<app-food-card [food]="food" [categoryName]="getCategoryName(food.categoryId)" [quantity]="getQuantity(food.id)" [restaurantOpen]="restaurant.isOpen" (add)="addToCart(food)" (increase)="increaseFood(food)" (decrease)="decreaseFood(food)"/>}</div>}
+          @else{<div class="menu-empty empty-state"><app-icon name="search"/><h3>این غذا را پیدا نکردیم</h3><p>یک اسم دیگر را امتحان کن یا همه غذاها را ببین.</p><button class="primary-button" (click)="clearFilters()">نمایش همه غذاها</button></div>}
+        } @else {
+          <div class="menu-empty empty-state"><app-icon name="utensils"/><h3>منوی این رستوران هنوز آماده نیست</h3><p>فعلاً می‌توانی طعم‌های رستوران‌های دیگر را کشف کنی.</p><a class="primary-button" routerLink="/restaurants">دیدن رستوران‌های دیگر</a></div>
+        }
+      </section>
+      @if(cartService.items$ | async; as cartItems){<app-menu-basket [items]="cartItems"/>}
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">{{statusMessage}}</p>
+  } @else {
+    <div class="menu-state empty-state"><app-icon name="search"/><h1>رستوران پیدا نشد</h1><p>از فهرست رستوران‌ها یک انتخاب تازه داشته باش.</p><a class="primary-button" routerLink="/restaurants">همه رستوران‌ها</a></div>
+  }
 </section>
-
-
-
-
-</section>
-
-
-
-
-
-<ng-template #notFound>
-
-
-<div class="not-found">
-
-رستوران پیدا نشد
-
-</div>
-
-
-</ng-template>

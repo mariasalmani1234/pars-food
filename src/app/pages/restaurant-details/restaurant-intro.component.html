@@ -1,0 +1,13 @@
+<a class="back-link" routerLink="/restaurants"><app-icon name="arrow"/>همه رستوران‌ها</a>
+<header class="restaurant-intro">
+  <div class="identity">
+    <div class="title-line"><span class="open-state" [class.closed]="!restaurant.isOpen"><i aria-hidden="true"></i>{{restaurant.isOpen?'اکنون باز است':'رستوران بسته است'}}</span></div>
+    <h1>{{restaurant.name}}</h1>
+    <p class="description">{{restaurant.description}}</p>
+    <div class="restaurant-meta"><span><app-icon name="star"/><strong>{{restaurant.rate.toLocaleString('fa-IR')}}</strong><span class="sr-only">امتیاز</span></span><span><app-icon name="pin"/>{{restaurant.city}}</span>
+      @if(deliveryTime; as minutes){<span><app-icon name="clock"/>{{minutes.toLocaleString('fa-IR')}} دقیقه</span>}
+    </div>
+    @if(restaurant.address && restaurant.address !== restaurant.city){<p class="address">{{restaurant.address}}</p>}
+  </div>
+  <img [appImage]="restaurant.image" [alt]="restaurant.name" width="240" height="170">
+</header>

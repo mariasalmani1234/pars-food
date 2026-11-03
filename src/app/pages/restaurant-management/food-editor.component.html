@@ -1,0 +1,14 @@
+<section class="editor" aria-labelledby="food-editor-title"><header><span class="eyebrow">{{editing ? 'ویرایش منو' : 'تکمیل منو'}}</span><h2 id="food-editor-title">{{editing ? 'ویرایش اطلاعات غذا' : 'افزودن غذای جدید'}}</h2><p>{{editing ? 'اطلاعات را تغییر دهید و ذخیره کنید.' : 'نام، قیمت و دسته‌بندی را وارد کنید.'}}</p></header>
+  <form (ngSubmit)="save.emit()" novalidate>
+    <div class="field"><label for="foodName">نام غذا <span>الزامی</span></label><input #nameInput id="foodName" name="foodName" [(ngModel)]="draft.name" [disabled]="saving" placeholder="مثلاً پیتزا مخصوص" required></div>
+    <div class="field"><label for="foodPrice">قیمت <span>تومان · الزامی</span></label><input id="foodPrice" name="foodPrice" type="number" min="1" inputmode="numeric" [(ngModel)]="draft.price" [disabled]="saving" placeholder="مثلاً ۲۵۰۰۰۰" required></div>
+    <div class="field"><label for="foodCategoryId">دسته‌بندی <span>الزامی</span></label><select id="foodCategoryId" name="foodCategoryId" [(ngModel)]="draft.categoryId" [disabled]="saving || categoriesLoading || !!categoryError || !categories.length" required><option [ngValue]="null">{{categoriesLoading ? 'در حال دریافت…' : 'انتخاب دسته‌بندی'}}</option>@for(category of categories; track category.id){<option [ngValue]="category.id">{{category.name}}</option>}</select>
+      @if(categoryError){<div class="category-error" role="alert"><p>{{categoryError}}</p><button type="button" (click)="retryCategories.emit()" [disabled]="categoriesLoading">دریافت دوباره دسته‌بندی‌ها</button></div>}
+      @else if(!categoriesLoading && !categories.length){<p class="note">دسته‌بندی‌ای برای ثبت غذا در دسترس نیست.</p>}
+    </div>
+    <div class="field"><label for="foodImage">مسیر تصویر <span>اختیاری</span></label><input id="foodImage" name="foodImage" type="text" dir="ltr" [(ngModel)]="draft.image" [disabled]="saving" placeholder="assets/image/food.jpg"><small>بدون تصویر، تصویر پیش‌فرض نمایش داده می‌شود.</small></div>
+    <div class="field"><label for="foodDescription">توضیحات <span>اختیاری</span></label><textarea id="foodDescription" name="foodDescription" rows="3" [(ngModel)]="draft.description" [disabled]="saving" placeholder="مواد اصلی و ویژگی‌های غذا"></textarea></div>
+    @if(errorMessage){<p class="form-error" role="alert">{{errorMessage}}</p>}
+    <div class="actions"><button class="primary-button" type="submit" [disabled]="saving || categoriesLoading || !!categoryError || !categories.length"><app-icon [name]="editing ? 'check' : 'plus'"/>{{saving ? 'در حال انجام…' : editing ? 'ذخیره تغییرات' : 'افزودن غذا'}}</button>@if(editing){<button class="cancel" type="button" (click)="cancel.emit()" [disabled]="saving">انصراف</button>}</div>
+  </form>
+</section>

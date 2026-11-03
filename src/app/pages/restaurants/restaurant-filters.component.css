@@ -1,0 +1,11 @@
+.discovery-tools{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px 20px;}
+.search-row{display:flex;align-items:center;gap:24px;}
+.search-field{flex:1;padding:5px 6px 5px 14px;}
+.search-field>app-icon{margin-inline-start:8px;}
+.search-field input{font-size:15px;}
+.search-button{min-height:44px;padding:8px 22px;border-radius:9px;}
+.open-filter{display:flex;gap:9px;align-items:center;min-height:44px;font-size:14px;white-space:nowrap;cursor:pointer;}
+.open-filter input{width:19px;height:19px;accent-color:var(--primary-dark);}
+.category-chips{padding-top:16px;}
+.chip-count{font-size:12px;opacity:.85;}
+@media(max-width:600px){.discovery-tools{padding:12px;border-radius:16px;}.search-row{display:block;}.search-field{gap:5px;padding-inline-end:5px;}.search-field>app-icon{margin-inline-start:3px;}.search-field input{font-size:14px;}.search-button{padding-inline:12px;}.open-filter{margin-top:9px;}.category-chips{gap:7px;padding-top:8px;}.category-chips button{padding:7px 10px;}}

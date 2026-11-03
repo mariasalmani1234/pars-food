@@ -1,88 +1,40 @@
-<section class="restaurants-page">
+<section class="discovery page-container" aria-labelledby="discovery-heading">
+  <header class="discovery-header">
+    <div>
+      <a routerLink="/" class="breadcrumb">خانه <span aria-hidden="true">/</span> رستوران‌ها</a>
+      <p class="eyebrow">وقتِ یک انتخاب خوشمزه</p>
+      <h1 id="discovery-heading">امروز از کجا سفارش می‌دی؟</h1>
+      <p class="intro">رستورانت را پیدا کن؛ طعم دلخواهت همین نزدیکی‌ست.</p>
+    </div>
+    <span class="location"><app-icon name="pin"/>رستوران‌های تهران</span>
+  </header>
+
+  <app-restaurant-filters [searchText]="searchText" [onlyOpen]="onlyOpen" [categoryId]="categoryId"
+    [categories]="categories" [categoryCounts]="categoryCounts"
+    (searchTextChange)="searchText = $event; filterRestaurants()" (onlyOpenChange)="onlyOpen = $event; filterRestaurants()"
+    (categoryIdChange)="selectCategory($event)" (searchSubmit)="submitSearch()" (searchClear)="clearSearch()"/>
 
 
-<div class="restaurants-header">
-
-
-<span>
-رستوران‌ها
-</span>
-
-
-<h1>
-بهترین غذاها را پیدا کن
-</h1>
-
-
-<p>
-رستوران مورد علاقه‌ات را انتخاب کن و سفارش بده.
-</p>
-
-
-</div>
-
-
-
-
-<div class="filters page-container">
-
-
-<input
-
-type="text"
-
-[(ngModel)]="searchText"
-
-(input)="filterRestaurants()"
-
-placeholder="جستجوی رستوران..."
-
->
-
-
-
-<label>
-
-<input
-
-type="checkbox"
-
-[(ngModel)]="onlyOpen"
-
-(change)="filterRestaurants()"
-
->
-
-فقط رستوران‌های باز
-
-</label>
-
-
-
-</div>
-
-
-
-
-
-
-<div class="restaurant-grid page-container">
-
-
-<app-restaurant-card
-
-*ngFor="let restaurant of filteredRestaurants"
-
-[restaurant]="restaurant"
-
->
-
-</app-restaurant-card>
-
-
-
-</div>
-
-
-
+  @if(loading){
+    <p class="loading-label" role="status">در حال پیدا کردن رستوران‌ها...</p>
+    <div class="restaurant-grid" aria-hidden="true">@for(item of [1,2,3,4]; track item){<div class="skeleton"><div></div><span></span><span></span></div>}</div>
+  } @else if(errorMessage){
+    <div class="result-state empty-state" role="alert"><app-icon name="utensils"/><h2>ارتباط برقرار نشد</h2><p>{{errorMessage}}</p><button class="primary-button" (click)="loadRestaurants()">تلاش دوباره</button></div>
+  } @else {
+    <div class="results-heading">
+      <p role="status"><strong>{{filteredRestaurants.length.toLocaleString('fa-IR')}}</strong> رستوران برای انتخاب</p>
+      <div class="result-actions">
+        @if(hasFilters){<button type="button" class="reset" (click)="clearFilters()">پاک کردن فیلترها</button>}
+        <label class="sort"><span>مرتب‌سازی:</span><select class="select-control" [(ngModel)]="sortOrder" (ngModelChange)="filterRestaurants()" aria-label="مرتب‌سازی رستوران‌ها"><option value="default">پیش‌فرض</option><option value="rating">بالاترین امتیاز</option></select></label>
+      </div>
+    </div>
+    @if(filteredRestaurants.length){
+      <div class="restaurant-grid">@for(restaurant of filteredRestaurants; track restaurant.id){<app-restaurant-card [restaurant]="restaurant"/>}</div>
+    } @else {
+      <div class="result-state empty-state"><app-icon name="search"/><h2>{{restaurants.length ? 'رستورانی با این مشخصات پیدا نشد' : 'فعلاً رستورانی ثبت نشده'}}</h2>
+        <p>{{restaurants.length ? 'یک نام یا دسته‌بندی دیگر را امتحان کن.' : 'کمی بعد دوباره به ما سر بزن.'}}</p>
+        @if(hasFilters){<button class="primary-button" (click)="clearFilters()">نمایش همه رستوران‌ها</button>}
+      </div>
+    }
+  }
 </section>

@@ -109,7 +109,7 @@ export class FoodService {
 
   addFood(
 
-    food:Food
+    food:Omit<Food, 'id'>
 
   ):
 

@@ -3,6 +3,8 @@ export type UserRole =
   | 'restaurant'
   | 'admin';
 
+export type SessionUser = Omit<User, 'password'>;
+
 
 export interface User {
 

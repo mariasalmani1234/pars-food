@@ -15,5 +15,5 @@ export interface Restaurant {
   description:string;
 
   isOpen:boolean;
-  deliveryTime:number;
+  deliveryTime?:number;
 }

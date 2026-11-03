@@ -1,0 +1,13 @@
+<article class="cart-row">
+ <img [appImage]="item.food.imageUrl" [alt]="item.food.name" width="88" height="88">
+ <div class="item-info"><h3>{{item.food.name}}</h3><p>{{item.food.description}}</p><span class="unit-price">هر عدد {{item.food.price.toLocaleString('fa-IR')}} تومان</span></div>
+ <button class="remove" type="button" (click)="remove.emit()" [attr.aria-label]="'حذف ' + item.food.name"><app-icon name="close"/></button>
+ <div class="row-bottom">
+  <div class="quantity quantity-control has-quantity" role="group" [attr.aria-label]="'تعداد ' + item.food.name">
+   <button type="button" (click)="increase.emit()" [disabled]="!item.food.isAvailable" [attr.aria-label]="'افزایش تعداد ' + item.food.name"><app-icon name="plus"/></button>
+   <span>{{item.quantity.toLocaleString('fa-IR')}}</span>
+   <button type="button" (click)="decrease.emit()" [attr.aria-label]="'کاهش تعداد ' + item.food.name"><app-icon name="minus"/></button>
+  </div>
+  <div class="line-total"><small>جمع این غذا</small><strong>{{(item.food.price * item.quantity).toLocaleString('fa-IR')}} <span>تومان</span></strong></div>
+ </div>
+</article>
