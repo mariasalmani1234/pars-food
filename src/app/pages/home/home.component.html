@@ -1,8 +1,289 @@
+<section class="home-page">
+
+
+<section class="hero-bento">
+
+
+<div class="hero-main">
+
+
+<span class="badge">
+
+✨ پارس فود
+
+</span>
+
+
+<h1>
+
+غذای مورد علاقه‌ات
+
+<br>
+
+سریع‌تر از همیشه
+
+</h1>
+
+
+
+<p>
+
+بهترین رستوران‌ها و غذاهای شهر را پیدا کن
+و تنها با چند کلیک سفارش بده.
+
+</p>
+
+
+
+<a
+routerLink="/restaurants"
+class="primary-btn"
+>
+
+مشاهده رستوران‌ها
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="hero-food">
+
+
+<img
+
+src="assets/images/hero-food.png"
+
+alt="food"
+
+>
+
+
+
+<div class="rating-card">
+
+
+<strong>
+⭐ 4.8
+</strong>
+
+
+<span>
+رضایت کاربران
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="mini-card">
+
+🍔
+
+<div>
+
+<strong>
+غذاهای محبوب
+</strong>
+
+<small>
+بیش از 50 مدل غذا
+</small>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="mini-card">
+
+🚀
+
+<div>
+
+<strong>
+ارسال سریع
+</strong>
+
+<small>
+کمتر از 40 دقیقه
+</small>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="mini-card">
+
+🏪
+
+<div>
+
+<strong>
+رستوران معتبر
+</strong>
+
+<small>
+انتخاب کاربران
+</small>
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<app-category-section></app-category-section>
+
+
+
+
+
+
+
+
+<section class="restaurants-section page-container">
+
+
+<div class="section-head">
+
+
+<span>
+محبوب‌ترین‌ها
+</span>
+
+
+<h2>
+رستوران‌های منتخب
+</h2>
+
+
+</div>
+
+
+
+
+
+
+<div class="restaurant-bento">
+
+
+@for(
+restaurant of restaurants;
+track restaurant.id
+){
+
+
 <app-restaurant-card
-   *ngFor="let restaurant of restaurants "
-   [name]="restaurant.name"
-   [city]="restaurant.city"
-   [rate]="restaurant.rate"
-   (detailsClicked)="openRestaurant($event)">
+
+[restaurant]="restaurant"
+
+>
+
+
 </app-restaurant-card>
 
+
+
+}
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<section class="feature-section">
+
+
+<div class="feature-card">
+
+
+<h2>
+چرا پارس فود؟
+</h2>
+
+
+<p>
+تجربه سفارش غذا با طراحی ساده،
+سریع و حرفه‌ای.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="feature-item">
+
+⚡
+
+ارسال سریع
+
+</div>
+
+
+
+<div class="feature-item">
+
+🍽️
+
+تنوع غذا
+
+</div>
+
+
+
+<div class="feature-item">
+
+⭐
+
+کیفیت تضمینی
+
+</div>
+
+
+
+
+</section>
+
+
+
+</section>

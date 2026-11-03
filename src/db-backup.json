@@ -1,0 +1,67 @@
+{
+  "restaurants": [
+    {
+      "id": 1,
+      "name": "بیف لاین",
+      "city": "تهران",
+      "rate": 4.3,
+      "image": "assets/images/بیف-لاین.jpg",
+      "address": "تهران",
+      "description": "برگر",
+      "isOpen": true
+    },
+    {
+      "id": 2,
+      "name": "پیتزا کاخ",
+      "city": "تهران",
+      "rate": 3.8,
+      "image": "assets/images/کاخ.jpg",
+      "address": "تهران",
+      "description": "پیتزا",
+      "isOpen": true
+    },
+    {
+      "id": 3,
+      "name": "سوخاری خروس",
+      "city": "تهران",
+      "rate": 4.1,
+      "image": "assets/images/خروس.jpg",
+      "address": "تهران",
+      "description": "سوخاری",
+      "isOpen": true
+    }
+  ],
+
+  "users":[],
+
+
+  "foods":[
+
+    {
+    "id": 1,
+    "restaurantId": 2,
+    "name": "پیتزا مخصوص",
+    "description": "پیتزا مخصوص با گوشت، قارچ و پنیر",
+    "price": 250000,
+    "image": "assets/images/pizza-special"
+  },
+  {
+    "id": 2,
+    "restaurantId": 2,
+    "name": "پیتزا پپرونی",
+    "description": "پیتزا پپرونی با پنیر مخصوص",
+    "price": 280000,
+    "image": ""
+  },
+  {
+    "id": 3,
+    "restaurantId": 3,
+    "name":"پیتزا مارگاریتا",
+    "description": "پیتزا مارگاریتا ناپولیتن",
+    "price": 220000,
+    "image": "assets/images/images(2)"
+  }
+
+  ]
+}
+

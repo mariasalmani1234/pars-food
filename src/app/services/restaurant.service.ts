@@ -1,34 +1,142 @@
 import { Injectable } from '@angular/core';
-import { Restaurant } from '../models/restaurant.model';
+import { HttpClient } from '@angular/common/http';
+
+import {
+  Observable
+} from 'rxjs';
+
+import {
+  Restaurant
+} from '../models/restaurant.model';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
 
-    restaurants:Restaurant[]=[
-    {
-      id:1,
-      name:"بیف لاین",
-      city:"تهران",
-      rate:4.3,
-    },
-    {
-      id:2,
-      name:"پیتزا کاخ",
-      city:"تهران",
-      rate:3.8,
-    },
-    {
-      id:3,
-      name:"سوخاری خروس",
-      city:"تهران",
-      rate:4.1,
-    },
-  
-  ];
-  getRestaurants() {
-    return this.restaurants;
+
+  private apiUrl =
+    'http://localhost:3000/restaurants';
+
+
+
+  constructor(
+    private http: HttpClient
+  ) {}
+
+
+
+
+
+  // دریافت همه رستوران‌ها
+
+  getRestaurants():
+
+  Observable<Restaurant[]> {
+
+    return this.http.get<Restaurant[]>(
+      this.apiUrl
+    );
+
   }
+
+
+
+
+
+  // دریافت یک رستوران با id
+
+  getRestaurantById(
+    id: number
+  ):
+
+  Observable<Restaurant> {
+
+
+    return this.http.get<Restaurant>(
+
+      `${this.apiUrl}/${id}`
+
+    );
+
+  }
+
+
+
+
+
+  // ثبت رستوران جدید
+
+  addRestaurant(
+
+    restaurant: Restaurant
+
+  ):
+
+  Observable<Restaurant> {
+
+
+    return this.http.post<Restaurant>(
+
+      this.apiUrl,
+
+      restaurant
+
+    );
+
+  }
+
+
+
+
+
+  // ویرایش رستوران
+
+  updateRestaurant(
+
+    id:number,
+
+    restaurant:Restaurant
+
+  ):
+
+  Observable<Restaurant> {
+
+
+    return this.http.put<Restaurant>(
+
+      `${this.apiUrl}/${id}`,
+
+      restaurant
+
+    );
+
+  }
+
+
+
+
+
+  // حذف رستوران
+
+  deleteRestaurant(
+
+    id:number
+
+  ):
+
+  Observable<void> {
+
+
+    return this.http.delete<void>(
+
+      `${this.apiUrl}/${id}`
+
+    );
+
+  }
+
 
 }

@@ -1,0 +1,173 @@
+{
+  "restaurants": [
+    {
+      "id": 1,
+      "name": "بیف لاین",
+      "city": "تهران",
+      "rate": 4.3,
+      "image": "assets/images/بیف-لاین.jpg",
+      "address": "تهران",
+      "description": "برگر",
+      "isOpen": true
+    },
+    {
+      "id": 2,
+      "name": "پیتزا کاخ",
+      "city": "تهران",
+      "rate": 3.8,
+      "image": "assets/images/کاخ.jpg",
+      "address": "تهران",
+      "description": "پیتزا",
+      "isOpen": true
+    },
+    {
+      "id": 3,
+      "name": "سوخاری خروس",
+      "city": "تهران",
+      "rate": 4.1,
+      "image": "assets/images/خروس.jpg",
+      "address": "تهران",
+      "description": "سوخاری",
+      "isOpen": true
+    },
+    {
+      "id": 4,
+      "name": "برگر هاب",
+      "city": "تهران",
+      "rate": 4.6,
+      "image": "assets/images/burger.jpg",
+      "address": "تهران",
+      "description": "برگر و سیب‌زمینی",
+      "isOpen": true
+    }
+  ],
+
+
+  "categories": [
+    {
+      "id": 1,
+      "name": "برگر"
+    },
+    {
+      "id": 2,
+      "name": "پیتزا"
+    },
+    {
+      "id": 3,
+      "name": "سوخاری"
+    },
+    {
+      "id": 4,
+      "name": "نوشیدنی"
+    }
+  ],
+
+
+  "foods": [
+    {
+      "id": 1,
+      "restaurantId": 1,
+      "categoryId": 1,
+      "name": "چیزبرگر مخصوص",
+      "description": "گوشت تازه، پنیر چدار، کاهو و سس مخصوص",
+      "price": 245000,
+      "imageUrl": "assets/images/burger.jpg",
+      "rate": 4.7,
+      "isAvailable": true
+    },
+    {
+      "id": 2,
+      "restaurantId": 1,
+      "categoryId": 1,
+      "name": "دابل برگر",
+      "description": "دو لایه گوشت با پنیر مخصوص",
+      "price": 315000,
+      "imageUrl": "assets/images/double-burger.jpg",
+      "rate": 4.5,
+      "isAvailable": true
+    },
+    {
+      "id": 3,
+      "restaurantId": 2,
+      "categoryId": 2,
+      "name": "پیتزا مخصوص",
+      "description": "پیتزا مخصوص با گوشت، قارچ و پنیر",
+      "price": 250000,
+      "imageUrl": "assets/images/pizza-special.jpg",
+      "rate": 4.6,
+      "isAvailable": true
+    },
+    {
+      "id": 4,
+      "restaurantId": 2,
+      "categoryId": 2,
+      "name": "پیتزا پپرونی",
+      "description": "پیتزا پپرونی با پنیر مخصوص",
+      "price": 280000,
+      "imageUrl": "assets/images/pepperoni.jpg",
+      "rate": 4.4,
+      "isAvailable": true
+    },
+    {
+      "id": 5,
+      "restaurantId": 3,
+      "categoryId": 3,
+      "name": "مرغ سوخاری دو تکه",
+      "description": "مرغ سوخاری با سیب زمینی و سس",
+      "price": 265000,
+      "imageUrl": "assets/images/fried-chicken.jpg",
+      "rate": 4.8,
+      "isAvailable": true
+    }
+  ],
+
+
+  "users": [
+    {
+      "id": 1,
+      "name": "ماریا",
+      "email": "mariasalmani1234@gmail.com",
+      "password": "1234567",
+      "phone": "09120000000",
+      "role": "customer"
+    },
+    {
+      "id": 2,
+      "name": "مدیر بیف لاین",
+      "email": "beef@parsfood.com",
+      "password": "123456",
+      "phone": "09121111111",
+      "role": "restaurant",
+      "restaurantId": 1
+    },
+    {
+      "id": 3,
+      "name": "مدیر سیستم",
+      "email": "admin@parsfood.com",
+      "password": "123456",
+      "phone": "09122222222",
+      "role": "admin"
+    }
+  ],
+
+
+  "orders": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "foodId": 3,
+          "name": "پیتزا مخصوص",
+          "price": 250000,
+          "quantity": 1
+        }
+      ],
+      "totalPrice": 250000,
+      "address": "تهران",
+      "phone": "09120000000",
+      "status": "pending",
+      "createdAt": "2026-09-19T11:50:01.942Z"
+    }
+  ]
+}

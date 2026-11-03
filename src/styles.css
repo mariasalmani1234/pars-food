@@ -1,1 +1,429 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+
+
+
+:root {
+
+
+
+  --primary: #FF4F9A;
+
+  --primary-dark: #D9367A;
+
+  --primary-light: #FFE5F0;
+
+
+
+  /* Background */
+
+  --background: #FFF8FB;
+
+  --surface: #FFFFFF;
+
+  --surface-dark: #132440;
+
+
+
+  /* Text */
+
+  --text: #222222;
+
+  --text-light: #777777;
+
+  --white: #FFFFFF;
+
+
+
+  /* Accent */
+
+  --accent: #FFD6E8;
+
+
+
+  /* Border */
+
+  --border: #F0E5EB;
+
+
+
+  /* Shadow */
+
+  --shadow-sm:
+
+  0 5px 20px rgba(0,0,0,.06);
+
+
+
+  --shadow-md:
+
+  0 15px 40px rgba(0,0,0,.10);
+
+
+
+  --shadow-pink:
+
+  0 15px 40px rgba(255,79,154,.22);
+
+
+
+  /* Radius */
+
+  --radius-sm:12px;
+
+  --radius-md:20px;
+
+  --radius-lg:32px;
+
+
+
+}
+
+
+
+
+* {
+
+  box-sizing:border-box;
+
+}
+
+
+
+html,
+body {
+
+
+  margin:0;
+
+  padding:0;
+
+
+  direction:rtl;
+
+  text-align:right;
+
+
+  font-family:
+
+  "Vazirmatn",
+  sans-serif;
+
+
+  background:
+
+  var(--background);
+
+
+  color:
+
+  var(--text);
+
+
+  scroll-behavior:smooth;
+
+
+}
+
+
+
+
+body {
+
+  min-height:100vh;
+
+}
+
+
+
+
+
+button,
+input,
+textarea,
+select {
+
+
+  font-family:inherit;
+
+
+}
+
+
+
+button {
+
+  cursor:pointer;
+
+}
+
+
+
+
+img {
+
+
+  max-width:100%;
+
+
+  display:block;
+
+
+}
+
+
+
+
+a {
+
+
+  color:inherit;
+
+
+}
+
+
+
+
+.page-container {
+
+
+  width:100%;
+
+
+  max-width:1280px;
+
+
+  margin:auto;
+
+
+  padding:
+
+  0 30px;
+
+
+}
+
+
+
+
+
+::-webkit-scrollbar {
+
+
+  width:8px;
+
+
+}
+
+
+
+::-webkit-scrollbar-track {
+
+
+  background:#f5f5f5;
+
+
+}
+
+
+
+::-webkit-scrollbar-thumb {
+
+
+  background:
+
+  var(--primary);
+
+
+  border-radius:20px;
+
+
+}
+
+
+
+
+
+.primary-button {
+
+
+  background:
+
+  var(--primary);
+
+
+  color:white;
+
+
+  border:none;
+
+
+  padding:
+
+  14px 30px;
+
+
+  border-radius:
+
+  30px;
+
+
+  font-weight:700;
+
+
+  transition:.3s;
+
+
+}
+
+
+
+.primary-button:hover {
+
+
+  background:
+
+  var(--primary-dark);
+
+
+  transform:
+
+  translateY(-3px);
+
+
+  box-shadow:
+
+  var(--shadow-pink);
+
+
+}
+
+
+
+
+
+
+.card {
+
+
+  background:
+
+  var(--surface);
+
+
+  border:
+
+  1px solid var(--border);
+
+
+  border-radius:
+
+  var(--radius-md);
+
+
+  box-shadow:
+
+  var(--shadow-sm);
+
+
+}
+
+
+
+
+
+
+.text-primary {
+
+
+  color:
+
+  var(--primary);
+
+
+}
+
+
+
+.text-muted {
+
+
+  color:
+
+  var(--text-light);
+
+
+}
+
+
+
+
+
+.fade-in {
+
+
+  animation:
+
+  fadeIn .5s ease;
+
+
+}
+
+
+
+@keyframes fadeIn {
+
+
+from {
+
+
+opacity:0;
+
+transform:
+
+translateY(20px);
+
+
+}
+
+
+
+to {
+
+
+opacity:1;
+
+transform:
+
+translateY(0);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+@media(max-width:768px){
+
+
+.page-container {
+
+
+padding:
+
+0 18px;
+
+
+}
+
+
+}

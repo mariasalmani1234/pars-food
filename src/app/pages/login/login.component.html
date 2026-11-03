@@ -1,0 +1,255 @@
+<section class="login-page">
+
+  <div class="login-container">
+
+
+    <!-- بخش معرفی -->
+    <div class="login-intro">
+
+
+      <div class="brand-icon">
+        🍔
+      </div>
+
+
+      <span class="brand-small">
+        Pars Food
+      </span>
+
+
+      <h1>
+        خوش آمدید
+      </h1>
+
+
+      <p>
+        با پارس فود به راحتی غذای مورد علاقه خود را
+        از بهترین رستوران‌ها سفارش دهید.
+      </p>
+
+
+
+      <div class="intro-features">
+
+
+        <div class="feature">
+
+          <span>
+            🍕
+          </span>
+
+          <p>
+            رستوران‌های متنوع
+          </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+          <span>
+            🚀
+          </span>
+
+          <p>
+            ارسال سریع
+          </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+          <span>
+            ⭐
+          </span>
+
+          <p>
+            امتیاز کاربران
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+    <!-- فرم ورود -->
+    <div class="login-card">
+
+
+      <div class="card-header">
+
+
+        <div class="user-icon">
+
+          👤
+
+        </div>
+
+
+        <h2>
+          ورود به حساب کاربری
+        </h2>
+
+
+        <p>
+          اطلاعات خود را وارد کنید
+        </p>
+
+
+      </div>
+
+
+
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+      >
+
+
+
+        <div class="form-group">
+
+
+          <label>
+            ایمیل
+          </label>
+
+
+          <div class="input-wrapper">
+
+
+            <span class="input-icon">
+              ✉️
+            </span>
+
+
+            <input
+
+              type="email"
+
+              placeholder="example@email.com"
+
+              formControlName="email"
+
+            >
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="form-group">
+
+
+          <label>
+            رمز عبور
+          </label>
+
+
+          <div class="input-wrapper">
+
+
+            <span class="input-icon">
+              🔒
+            </span>
+
+
+            <input
+
+              type="password"
+
+              placeholder="رمز عبور"
+
+              formControlName="password"
+
+            >
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+
+        <div
+          class="error-message"
+          *ngIf="errorMessage"
+        >
+
+          ⚠️
+
+          {{errorMessage}}
+
+        </div>
+
+
+
+
+        <button
+
+          class="login-button"
+
+          type="submit"
+
+          [disabled]="form.invalid"
+
+        >
+
+          ورود به پارس فود
+
+
+        </button>
+
+
+
+      </form>
+
+
+
+
+
+      <div class="register-box">
+
+
+        <span>
+          حساب ندارید؟
+        </span>
+
+
+        <a routerLink="/register">
+
+          ثبت نام کنید
+
+        </a>
+
+
+      </div>
+
+
+
+
+    </div>
+
+
+  </div>
+
+
+</section>

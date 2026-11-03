@@ -1,0 +1,274 @@
+<section
+class="detail-page"
+*ngIf="restaurant; else notFound"
+>
+
+
+<div class="restaurant-cover">
+
+
+<div>
+
+<span>
+رستوران منتخب
+</span>
+
+
+<h1>
+{{restaurant.name}}
+</h1>
+
+
+<p>
+{{restaurant.description}}
+</p>
+
+
+<div class="meta">
+
+
+<strong>
+⭐ {{restaurant.rate}}
+</strong>
+
+
+<strong>
+📍 {{restaurant.city}}
+</strong>
+
+
+<strong>
+🚀 30 دقیقه
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+<img
+
+[src]="restaurant.image"
+
+[alt]="restaurant.name"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+<section class="menu">
+
+
+<div class="menu-head">
+
+
+<h2>
+منوی غذا
+</h2>
+
+
+<a routerLink="/cart">
+سبد خرید
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="category-filter">
+
+
+<button
+
+[class.active]="selectedCategoryId===null"
+
+(click)="filterByCategory(null)"
+
+>
+
+همه
+
+</button>
+
+
+
+<button
+
+*ngFor="let category of categories"
+
+[class.active]="selectedCategoryId===category.id"
+
+(click)="filterByCategory(category.id)"
+
+>
+
+{{category.name}}
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="food-grid">
+
+
+
+<article
+
+class="food-card"
+
+*ngFor="let food of filteredFoods"
+
+>
+
+
+<div class="food-image">
+
+
+<img
+
+[src]="food.imageUrl"
+
+[alt]="food.name"
+
+>
+
+
+</div>
+
+
+
+
+
+<div class="food-content">
+
+
+<span>
+
+دسته {{food.categoryId}}
+
+</span>
+
+
+
+<h3>
+
+{{food.name}}
+
+</h3>
+
+
+
+<p>
+
+{{food.description}}
+
+</p>
+
+
+
+
+<div class="food-bottom">
+
+
+<strong>
+
+{{food.price | number}}
+
+تومان
+
+</strong>
+
+
+
+
+<button
+
+(click)="addToCart(food)"
+
+[disabled]="!food.isAvailable"
+
+>
+
+
+{{
+
+addedFoodId === food.id
+
+?
+
+'اضافه شد ✓'
+
+:
+
+'افزودن'
+
+}}
+
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</article>
+
+
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+</section>
+
+
+
+
+
+<ng-template #notFound>
+
+
+<div class="not-found">
+
+رستوران پیدا نشد
+
+</div>
+
+
+</ng-template>

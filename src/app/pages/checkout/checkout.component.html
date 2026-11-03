@@ -1,0 +1,252 @@
+<section class="checkout-page">
+
+
+<div class="page-container">
+
+
+
+<div class="checkout-title">
+
+
+<span>
+آخرین مرحله
+</span>
+
+
+<h1>
+ثبت سفارش
+</h1>
+
+
+<p>
+اطلاعات ارسال را وارد کنید.
+</p>
+
+
+</div>
+
+
+
+
+
+
+@if(cartService.getTotalQuantity()){
+
+
+
+<div class="checkout-layout">
+
+
+
+
+
+<section class="form-card">
+
+
+<h2>
+اطلاعات ارسال
+</h2>
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+آدرس
+</label>
+
+
+<textarea
+
+[(ngModel)]="address"
+
+placeholder="آدرس کامل ارسال"
+
+></textarea>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+شماره تماس
+</label>
+
+
+<input
+
+[(ngModel)]="phone"
+
+placeholder="شماره موبایل"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<button
+
+class="submit-button"
+
+(click)="submitOrder()"
+
+>
+
+ثبت نهایی سفارش
+
+</button>
+
+
+
+
+
+
+@if(message){
+
+<p class="success">
+
+{{message}}
+
+</p>
+
+}
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<aside class="summary-card">
+
+
+<h2>
+خلاصه سفارش
+</h2>
+
+
+
+
+<div class="summary-row">
+
+<span>
+تعداد غذا
+</span>
+
+
+<strong>
+
+{{cartService.getTotalQuantity()}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="summary-row total">
+
+
+<span>
+مبلغ کل
+</span>
+
+
+<strong>
+
+{{cartService.getTotalPrice() | number}}
+
+تومان
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="secure">
+
+🔒 پرداخت امن و سریع
+
+</div>
+
+
+
+</aside>
+
+
+
+
+
+
+
+</div>
+
+
+
+}
+
+@else{
+
+
+
+<div class="empty-box">
+
+
+<h2>
+سبد خرید خالی است
+</h2>
+
+
+<a routerLink="/restaurants">
+
+بازگشت به رستوران‌ها
+
+</a>
+
+
+</div>
+
+
+
+}
+
+
+
+
+</div>
+
+
+</section>

@@ -1,1 +1,88 @@
-<p>restaurants works!</p>
+<section class="restaurants-page">
+
+
+<div class="restaurants-header">
+
+
+<span>
+رستوران‌ها
+</span>
+
+
+<h1>
+بهترین غذاها را پیدا کن
+</h1>
+
+
+<p>
+رستوران مورد علاقه‌ات را انتخاب کن و سفارش بده.
+</p>
+
+
+</div>
+
+
+
+
+<div class="filters page-container">
+
+
+<input
+
+type="text"
+
+[(ngModel)]="searchText"
+
+(input)="filterRestaurants()"
+
+placeholder="جستجوی رستوران..."
+
+>
+
+
+
+<label>
+
+<input
+
+type="checkbox"
+
+[(ngModel)]="onlyOpen"
+
+(change)="filterRestaurants()"
+
+>
+
+فقط رستوران‌های باز
+
+</label>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="restaurant-grid page-container">
+
+
+<app-restaurant-card
+
+*ngFor="let restaurant of filteredRestaurants"
+
+[restaurant]="restaurant"
+
+>
+
+</app-restaurant-card>
+
+
+
+</div>
+
+
+
+</section>

@@ -1,0 +1,735 @@
+<div class="management-page">
+
+
+  <section class="management-header">
+
+    <div class="header-content">
+
+      <span class="header-label">
+        پنل رستوران
+      </span>
+
+      <h1>
+        مدیریت منوی رستوران
+      </h1>
+
+      <p>
+        افزودن، ویرایش و مدیریت غذاهای رستوران
+      </p>
+
+    </div>
+
+
+    <div class="header-icon">
+      🍽️
+    </div>
+
+  </section>
+
+
+
+
+
+  <section class="restaurant-selector">
+
+
+    <div class="section-heading">
+
+      <span>
+        انتخاب رستوران
+      </span>
+
+      <h2>
+        رستورانی که می‌خواهید مدیریت کنید
+      </h2>
+
+    </div>
+
+
+
+    <select
+      [(ngModel)]="selectedRestaurantId"
+      (change)="selectRestaurant()"
+    >
+
+      <option [ngValue]="null">
+        انتخاب رستوران
+      </option>
+
+
+      @for(
+        restaurant of restaurants;
+        track restaurant.id
+      ){
+
+        <option
+          [ngValue]="restaurant.id"
+        >
+
+          {{restaurant.name}}
+
+        </option>
+
+      }
+
+    </select>
+
+
+  </section>
+
+
+
+
+
+
+
+  @if(successMessage){
+
+    <div class="success-message">
+
+      ✅ {{successMessage}}
+
+    </div>
+
+  }
+
+
+
+
+  @if(errorMessage){
+
+    <div class="error-message">
+
+      ⚠️ {{errorMessage}}
+
+    </div>
+
+  }
+
+
+
+
+
+
+
+
+@if(selectedRestaurantId){
+
+
+
+<section class="food-form-card">
+
+
+<div class="section-heading">
+
+<span>
+
+{{editingFoodId ? 'ویرایش غذا':'غذای جدید'}}
+
+</span>
+
+
+<h2>
+
+{{editingFoodId ? 'ویرایش اطلاعات غذا':'افزودن غذای جدید'}}
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-grid">
+
+
+
+<div class="form-group">
+
+<label>
+نام غذا
+</label>
+
+
+<input
+
+type="text"
+
+[(ngModel)]="foodName"
+
+placeholder="مثلاً پیتزا مخصوص"
+
+>
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+<label>
+قیمت
+</label>
+
+
+<input
+
+type="number"
+
+[(ngModel)]="foodPrice"
+
+placeholder="250000"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+<label>
+تصویر غذا
+</label>
+
+
+<input
+
+type="text"
+
+[(ngModel)]="foodImage"
+
+placeholder="assets/images/food.jpg"
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+<label>
+دسته بندی
+</label>
+
+
+<select
+[(ngModel)]="foodCategoryId"
+>
+
+
+<option [ngValue]="null">
+انتخاب دسته بندی
+</option>
+
+
+<option [ngValue]="1">
+برگر
+</option>
+
+
+<option [ngValue]="2">
+پیتزا
+</option>
+
+
+<option [ngValue]="3">
+سوخاری
+</option>
+
+
+<option [ngValue]="4">
+نوشیدنی
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-group full-width">
+
+
+<label>
+توضیحات
+</label>
+
+
+<textarea
+
+rows="4"
+
+[(ngModel)]="foodDescription"
+
+placeholder="توضیحات غذا"
+
+></textarea>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-actions">
+
+
+<button
+
+class="save-button"
+
+(click)="saveFood()"
+
+[disabled]="saving"
+
+>
+
+
+@if(saving){
+
+در حال ذخیره...
+
+}
+
+@else if(editingFoodId){
+
+ذخیره تغییرات
+
+}
+
+@else{
+
+افزودن غذا
+
+}
+
+
+</button>
+
+
+
+
+
+@if(editingFoodId){
+
+<button
+
+class="cancel-button"
+
+(click)="resetForm()"
+
+>
+
+انصراف
+
+</button>
+
+}
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="foods-section">
+
+
+<div class="section-heading">
+
+<span>
+منوی رستوران
+</span>
+
+
+<h2>
+
+غذاهای
+{{selectedRestaurant?.name}}
+
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+@if(loading){
+
+
+<div class="loading-box">
+
+<div class="spinner"></div>
+
+<p>
+در حال دریافت اطلاعات...
+</p>
+
+</div>
+
+
+}
+
+@else if(foods.length === 0){
+
+
+<div class="empty-foods">
+
+<div>
+🍽️
+</div>
+
+
+<h3>
+هنوز غذایی ثبت نشده است
+</h3>
+
+
+<p>
+اولین غذا را اضافه کنید.
+</p>
+
+
+</div>
+
+
+}
+
+@else{
+
+
+
+<div class="foods-grid">
+
+
+
+@for(
+
+food of foods;
+
+track food.id
+
+){
+
+
+
+<article class="food-card">
+
+
+
+<div class="food-image">
+
+
+@if(food.imageUrl){
+
+<img
+
+[src]="food.imageUrl"
+
+[alt]="food.name"
+
+>
+
+}
+
+@else{
+
+<span>
+🍔
+</span>
+
+}
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="food-content">
+
+
+<span class="food-category">
+
+{{food.categoryId}}
+
+</span>
+
+
+
+<h3>
+
+{{food.name}}
+
+</h3>
+
+
+
+<p>
+
+{{food.description}}
+
+</p>
+
+
+
+
+
+
+<div class="food-footer">
+
+
+<strong>
+
+{{food.price | number}}
+
+<small>
+تومان
+</small>
+
+</strong>
+
+
+
+
+
+<div class="food-actions">
+
+
+<button
+
+class="edit-button"
+
+(click)="editFood(food)"
+
+>
+
+ویرایش
+
+</button>
+
+
+
+<button
+
+class="delete-button"
+
+(click)="deleteFood(food)"
+
+>
+
+حذف
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</article>
+
+
+
+}
+
+
+</div>
+
+
+}
+
+
+
+</section>
+<section class="dashboard-stats">
+
+
+<div class="dashboard-card">
+
+
+<span>
+🍽️
+</span>
+
+
+<div>
+
+<small>
+تعداد غذاها
+</small>
+
+
+<strong>
+{{totalFoods}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<span>
+🛒
+</span>
+
+
+<div>
+
+<small>
+سفارش‌ها
+</small>
+
+
+<strong>
+{{restaurantOrders}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<span>
+💰
+</span>
+
+
+<div>
+
+<small>
+فروش کل
+</small>
+
+
+<strong>
+{{totalSales | number}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+
+<span>
+⭐
+</span>
+
+
+<div>
+
+<small>
+امتیاز
+</small>
+
+
+<strong>
+{{restaurantRate}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+}
+
+
+
+
+
+
+</div>

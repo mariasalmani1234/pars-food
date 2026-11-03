@@ -1,0 +1,514 @@
+<section class="orders-page">
+
+
+  <!-- Header -->
+
+  <header class="orders-header">
+
+
+    <div class="header-content">
+
+
+      <span class="header-label">
+
+        Pars Food
+
+      </span>
+
+
+      <h1>
+
+        سفارش‌های من
+
+      </h1>
+
+
+      <p>
+
+        تاریخچه سفارش‌ها و وضعیت آماده‌سازی
+        غذاهای شما
+
+      </p>
+
+
+    </div>
+
+
+
+    <div class="header-icon">
+
+      🍽️
+
+    </div>
+
+
+  </header>
+
+
+
+
+
+  <main class="orders-container">
+
+
+
+    <!-- Title -->
+
+    <div class="orders-title">
+
+
+      <span>
+
+        Order History
+
+      </span>
+
+
+      <h2>
+
+        آخرین سفارش‌ها
+
+      </h2>
+
+
+    </div>
+
+
+
+
+
+    <!-- Empty -->
+
+    <div
+
+      class="empty-orders"
+
+      *ngIf="
+        orders.length === 0
+      "
+
+    >
+
+
+      <div class="empty-icon">
+
+        🛒
+
+      </div>
+
+
+
+      <h2>
+
+        هنوز سفارشی ثبت نکرده‌اید
+
+      </h2>
+
+
+
+      <p>
+
+        برای شروع، از بین رستوران‌های
+        پارس فود غذای مورد علاقه خود را
+        انتخاب کنید.
+
+      </p>
+
+
+
+      <a
+
+        routerLink="/restaurants"
+
+        class="restaurants-button"
+
+      >
+
+        مشاهده رستوران‌ها
+
+      </a>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Orders -->
+
+    <div
+
+      class="orders-list"
+
+      *ngIf="
+        orders.length > 0
+      "
+
+    >
+
+
+
+      <article
+
+        class="order-card"
+
+        *ngFor="
+          let order of orders
+        "
+
+      >
+
+
+
+
+
+        <!-- Top -->
+
+        <div class="order-top">
+
+
+          <div class="order-number">
+
+
+            <span>
+
+              شماره سفارش
+
+            </span>
+
+
+
+            <strong>
+
+              #{{order.id}}
+
+            </strong>
+
+
+
+          </div>
+
+
+
+
+
+          <div
+
+            class="order-status"
+
+            [ngClass]="{
+
+
+              'status-pending':
+              order.status === 'pending',
+
+
+
+              'status-confirmed':
+              order.status === 'accepted',
+
+
+
+              'status-delivered':
+              order.status === 'delivered',
+
+
+
+              'status-cancelled':
+              order.status === 'cancelled'
+
+
+            }"
+
+          >
+
+
+            <span class="status-dot"></span>
+
+
+
+            {{
+
+
+              getStatusText(
+                order.status
+              )
+
+
+            }}
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Date -->
+
+        <div class="order-date">
+
+
+          <span>
+
+            📅
+
+          </span>
+
+
+
+          <div>
+
+
+            <strong>
+
+              تاریخ ثبت سفارش
+
+            </strong>
+
+
+            <small>
+
+
+              {{
+
+                order.createdAt
+
+                | date:'yyyy/MM/dd - HH:mm'
+
+              }}
+
+
+            </small>
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Items -->
+
+        <div class="order-items">
+
+
+          <div class="items-title">
+
+
+            <span>
+
+              اقلام سفارش
+
+            </span>
+
+
+            <small>
+
+              {{order.items.length}}
+              آیتم
+
+            </small>
+
+
+          </div>
+
+
+
+
+
+
+          <div
+
+            class="order-item"
+
+            *ngFor="
+              let item of order.items
+            "
+
+          >
+
+
+            <div class="item-name">
+
+
+              <span class="quantity">
+
+                {{item.quantity}}×
+
+              </span>
+
+
+
+              <span>
+
+                {{item.food.name}}
+
+              </span>
+
+
+            </div>
+
+
+
+
+
+            <strong>
+
+
+              {{
+
+                (
+                  item.food.price *
+                  item.quantity
+
+                )
+
+                .toLocaleString('fa-IR')
+
+
+              }}
+
+
+              تومان
+
+
+            </strong>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <!-- Bottom -->
+
+
+        <div class="order-bottom">
+
+
+
+          <div class="delivery-info">
+
+
+            <span>
+
+              📍
+
+            </span>
+
+
+
+            <div>
+
+
+              <small>
+
+                آدرس ارسال
+
+              </small>
+
+
+              <p>
+
+                {{order.address}}
+
+              </p>
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+          <div class="order-total">
+
+
+            <span>
+
+              مبلغ نهایی
+
+            </span>
+
+
+
+            <strong>
+
+
+              {{
+
+                order.totalPrice
+
+                .toLocaleString('fa-IR')
+
+              }}
+
+
+            </strong>
+
+
+
+            <small>
+
+              تومان
+
+            </small>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+      </article>
+
+
+
+
+    </div>
+
+
+
+
+
+  </main>
+
+
+</section>
